@@ -73,6 +73,14 @@ namespace perf
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }
+        [Benchmark]
+        public void SimpleBehaviorShort()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbShort);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
 
 
         [Benchmark]
@@ -91,6 +99,14 @@ namespace perf
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }
+        [Benchmark]
+        public void SimpleBehaviorShortSurrogates()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbShortSurrogates);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
 
 
         [Benchmark]
@@ -106,6 +122,14 @@ namespace perf
         {
             var writer2 = new ByteBufferWriter();
             writer2.WriteLengthEncodedStringNew(_sbMedium);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
+        [Benchmark]
+        public void SimpleBehaviorMedium()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbMedium);
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }
@@ -129,6 +153,14 @@ namespace perf
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }
+        [Benchmark]
+        public void SimpleBehaviorMediumSurrogates()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbMediumSurrogates);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
 
 
 
@@ -145,6 +177,14 @@ namespace perf
         {
             var writer2 = new ByteBufferWriter();
             writer2.WriteLengthEncodedStringNew(_sbLong);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
+        [Benchmark]
+        public void SimpleBehaviorLong()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbLong);
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }
@@ -166,6 +206,14 @@ namespace perf
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }
+        [Benchmark]
+        public void SimpleBehaviorLongSurrogates()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbLongSurrogates);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
 
 
         [Benchmark]
@@ -181,6 +229,14 @@ namespace perf
         {
             var writer2 = new ByteBufferWriter();
             writer2.WriteLengthEncodedStringNew(_sbExLong);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
+        [Benchmark]
+        public void SimpleBehaviorExLong()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbExLong);
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }
@@ -200,6 +256,14 @@ namespace perf
         {
             var writer2 = new ByteBufferWriter();
             writer2.WriteLengthEncodedStringNew(_sbExLongSurrogates);
+
+            var payload = writer2.ToPayloadData().Memory.ToArray();
+        }
+        [Benchmark]
+        public void SimpleBehaviorExLongSurrogates()
+        {
+            var writer2 = new ByteBufferWriter();
+            writer2.WriteLengthEncodedStringSimple(_sbExLongSurrogates);
 
             var payload = writer2.ToPayloadData().Memory.ToArray();
         }

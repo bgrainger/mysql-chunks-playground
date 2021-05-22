@@ -149,6 +149,42 @@ namespace src
 		}
 #endif
 
+		public void WriteLengthEncodedStringSimple(StringBuilder builder)
+		{
+#if !NET45 && !NET461 && !NET471 && !NETSTANDARD1_3 && !NETSTANDARD2_0 && !NETSTANDARD2_1 && !NETCOREAPP2_1
+			// save where the length will be written
+			var lengthPosition = Position;
+			if (m_output.Length < 9)
+				Reallocate(9);
+			Advance(9);
+
+			// write all the text as UTF-8
+			m_encoder ??= Encoding.UTF8.GetEncoder();
+			foreach (var chunk in builder.GetChunks())
+			{
+				var currentSpan = chunk.Span;
+				while (currentSpan.Length > 0)
+				{
+					if (m_output.Length < 4)
+						Reallocate();
+					m_encoder.Convert(currentSpan, m_output.Span, true, out var charsUsed, out var bytesUsed, out var completed);
+					currentSpan = currentSpan.Slice(charsUsed);
+					m_output = m_output.Slice(bytesUsed);
+					if (!completed)
+						Reallocate();
+					Debug.Assert(completed == (currentSpan.Length == 0));
+				}
+			}
+
+			// write the length (as a 64-bit integer) in the reserved space
+			var textLength = Position - (lengthPosition + 9);
+			m_buffer[lengthPosition] = 0xFE;
+			BinaryPrimitives.WriteUInt64LittleEndian(m_buffer.AsSpan(lengthPosition + 1), (ulong) textLength);
+#else
+			WriteLengthEncodedString(builder.ToString());
+#endif
+		}
+
 		public void WriteString(short value)
 		{
 			int bytesWritten;
